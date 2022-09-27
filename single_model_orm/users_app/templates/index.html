@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        body,.top-page{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .table{
+            border: 2px solid gray;
+            width: 800px;
+        }
+
+        th,td{
+            border: 2px solid gray;
+        }
+        .id{
+            width: 70px;
+        }
+
+        .line{
+            background-color: black;
+            border-radius: 50%;
+            width: 1000px;
+            height: 4px;
+        }
+
+        .bottom-page{
+            display: flex;
+        }
+
+        .inputs{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 400px;
+        }
+
+        .inner{
+            display: flex;
+            align-items: center;
+            width: 270px;
+            justify-content: space-between;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap:50px;
+        }
+
+        .button{
+            width: 70px;
+            height: 40px;
+            border: none;
+            background-color: blue;
+            color: white;
+            box-shadow: 2px 2px 2px 2px black;
+        }
+
+        .button:active{
+            background-color: rgb(61, 61, 255);
+        }
+
+        .delete{
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-page">
+        <h1>All the Users</h1>
+    <table class="table table-dark table-striped">
+        <tr>
+            <th class="id">ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th class="id">Age</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{user.id}}</td>
+            <td>{{user.first_name}}</td>
+            <td>{{user.email_address}}</td>
+            <td>{{user.age}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+    </div>
+    <div class="line"></div>
+    <h1>Add a User</h1>
+    <form action="/add" method="post">
+    {% csrf_token %}
+    <div class="bottom-page">
+        <div class="inputs">
+            <div class="inner"><label for="first-name">First Name</label><input type="text" name="first-name" required></div>
+            <div class="inner"><label for="email">Email</label><input type="email" name="email" required></div>
+        </div>
+        <div class="inputs">
+            <div class="inner"><label for="last-name">Last Name</label><input type="text" name="last-name" required></div>
+            <div class="inner"><label for="age">Age</label><input type="number" name="age" required></div>
+        </div>
+    </div>
+        <input class="button" type="submit" value="add">
+    </form>
+    <form action="/delete" method="post">
+    {% csrf_token %}
+        <div class="delete">
+            <div class="inner"><label for="id">type ID</label><input type="number" name="id" required></div>
+            <input class="button" type="submit" value="delete">
+        </div>
+    </form>
+</body>
+</html>
