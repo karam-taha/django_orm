@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Books & Authors</title>
+    {% load static %}
+</head>
+<body>
+    <div>
+        <h1>{{ author.first_name }} {{ author.last_name }}</h1>
+        <p>ID: {{ author.id }}</p>
+        <label for="">Notes:</label>
+        <p>{{ author.notes }}</p>
+    </div>
+    <div>
+        <label for="">Books:</label>
+        <ul>
+        {% for book in author.books.all %}
+        <li>{{ book.title }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <form action="/addbooktoauthor/{{ author.id }}" method="POST">
+        {% csrf_token %}
+        <select name="book_id">
+            {% for book in books %}
+            <option value="{{ book.id }}">{{ book.title }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-success">Add</button>
+        </form>
+    </div>
+    <div id="homebtn">
+        <button class="btn btn-outline-info" id="backbookbtn">
+            <a href="/">Back to Books</a>
+        </button>
+        <button class="btn btn-outline-info" id="backauthbtn">
+            <a href="/authors">Back to Authors</a>
+        </button>
+    </div>
+</body>
+</html>
