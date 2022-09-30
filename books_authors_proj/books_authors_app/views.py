@@ -9,8 +9,7 @@ def books(request):
     return render(request, 'index.html', context)
 
 def newbook(request):
-    form = request.POST
-    Book.objects.create(title=form['book_title'], desc=form['book_desc']) 
+    Book.objects.create(title=request.POST['book_title'], desc=request.POST['book_desc']) 
     return redirect('/')
 
 def authors(request):
@@ -20,8 +19,8 @@ def authors(request):
     return render(request,'authors.html', context)
 
 def newauthor(request):
-    form = request.POST
-    Author.objects.create(first_name=form['author_first'], last_name=form['author_last'], notes=form['author_notes'])
+    Author.objects.create(first_name=request.POST['author_first'],
+    last_name=request.POST['author_last'], notes=request.POST['author_notes'])
     return redirect('/authors')
 
 def book_info(request, id):
@@ -52,7 +51,8 @@ def addbooktoauthor(request, id):
     author = Author.objects.get(id=id)
     book = Book.objects.get(id=request.POST['book_id'])
     author.books.add(book)
-    return redirect(f'/author_info/{author.id}')
+    return redirect(f'/authors/{author.id}')
+
 
 def addauthortobook(request, id):
     book = Book.objects.get(id=id)
